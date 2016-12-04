@@ -6,21 +6,21 @@
 		.controller('Account.IndexController', Controller);
 		
 		function Controller ($window, UserService, FlashService) {
-			var cu = this;
+			var vm = this;
 			
-			cu.user = null;
-			cu.addUser = addUser;
-			cu.removeUser = removeUser;
+			vm.user = null;
+			vm.addUser = addUser;
+			vm.removeUser = removeUser;
 			
 			initController();
 			
 			function initController() {
 				Useres.GetCurrent().then(function (user) {
-					cu.user = user;
+					vm.user = user;
 				});
 			}
 			function removeUser() {
-				Useres.Remove(cu.user._id)
+				Useres.Remove(vm.user._id)
 					.then(function () {
 						$window.location = '\login';
 					})
@@ -29,7 +29,7 @@
 					});
 			}
 			function addUser() {
-				Useres.Update(cu.user)
+				Useres.Update(vm.user)
 					.then(function() {
 						Flashes.Success('User update');
 						}).catch(function (error) {
