@@ -46,7 +46,6 @@
             return $http.delete('/api/todos/' + _id).then(handleSuccess, handleError);
         }
  
-        // private functions
  
         function handleSuccess(res) {
             return res.data;

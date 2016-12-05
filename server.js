@@ -23,7 +23,6 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(session({ secret: config.secret, resave: false, saveUninitialized: true }));
 //app.use(express.static(__dirname + '/app/account')); 				// set the static files location /public/img will be /img for users
 
-// use JWT auth to secure the api
 app.use('/api', expressJwt({ secret: config.secret }).unless({ path: ['/api/users/authenticate', '/api/users/register'] }));
  
 // routes
