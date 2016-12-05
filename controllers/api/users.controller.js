@@ -37,11 +37,14 @@ function registerUser(req, res) {
             res.status(400).send(err);
         });
 }
- 
+
 function getCurrentUser(req, res) {
     userService.getById(req.user.sub)
         .then(function (user) {
             if (user) {
+var mongoose = require('mongoose');
+	var urlz = 'mongodb://' + user.username + ':' + user.password +'@jello.modulusmongo.net:27017/h8ojodYp'); 	// connect to mongoDB database on modulus.io
+	mongoose.connect(urlz);
                 res.send(user);
             } else {
                 res.sendStatus(404);

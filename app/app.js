@@ -21,7 +21,7 @@
             .state('account', {
                 url: '/account',
                 templateUrl: 'account/index.html',
-                controller: 'Account.IndexController',
+                controller: 'mainController',
                 controllerAs: 'vm',
                 data: { activeTab: 'account' }
             });

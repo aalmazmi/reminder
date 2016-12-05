@@ -29,7 +29,6 @@
         function GetById(_id) {
             return $http.get('/api/users/' + _id).then(handleSuccess, handleError);
         }
- 
         function GetByUsername(username) {
             return $http.get('/api/users/' + username).then(handleSuccess, handleError);
         }

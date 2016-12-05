@@ -1,25 +1,64 @@
-<h1>Account</h1>
-<div class="form-container">
-    <form method="post">
-        <div class="form-group">
-            <label for="firstName">First name</label>
-            <input type="text" id="firstName" class="form-control" ng-model="vm.user.firstName" required />
+
+ <!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="app">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+    <title>Node/Apollo Todo App</title>
+
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="/static/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/static/stylesheets/style.css" />
+    <style>
+        html                    { overflow-y:scroll; }
+        body                    { padding-top:50px; }
+        #todo-list              { margin-bottom:50px; }
+    </style>
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+    <script src="/index.controller.js"></script>
+
+</head>
+<body ng-controller="mainController">
+    <div class="container">
+
+        <div class="jumbotron text-center">
+            <h1>Things to do<span class="label label-info">{{ todos.length }}</span></h1>
         </div>
-        <div class="form-group">
-            <label for="lastName">Last name</label>
-            <input type="text" id="lastName" class="form-control" ng-model="vm.user.lastName" required />
+        <div id="todo-list" class="row">
+            <div class="col-sm-5 col-sm-offset-5">
+
+                <div class="checkbox" ng-repeat="todo in todos">
+                    <label>
+                        <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
+                    </label>
+                </div>
+
+            </div>
         </div>
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" class="form-control" ng-model="vm.user.username" required />
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <div class="form-group">
+						<label for="description">What do you need to do?</label>
+
+                        <input type="text" class="form-control input-lg text-center" placeholder="Please add your todo to your list of todos to get done!" ng-model="formData.text">
+         	  	 <label for="email">email</label>
+            	<input type="text" class="form-control input-lg text-center" placeholder="user@domain.com" ng-model="formData.email">
+    
+            <label for="daytimeremind">When do you want to be reminded of it?</label>
+            <input type="datetime-local" name = "daytimeremind" id="daytimeremind" id="username" class="form-control" ng-model="formData.time">
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" class="form-control" ng-model="vm.user.password" />
+       
+
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <button class="btn btn-primary" ng-click="vm.addUser()">Save</button>
-            <button class="btn btn-danger" ng-click="vm.removeUser()">Delete</button>
-        </div>
-    </form>
-</div>
+
+    </div>
+    <a href="/users/logout" class="btn btn-danger">logout</button>
+
+</body>
+</html>
