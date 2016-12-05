@@ -37,12 +37,13 @@ function authenticate(username, password) {
  
 function getById(_id) {
     var deferred = Q.defer();
- 
+ 	
     db.users.findById(_id, function (err, user) {
         if (err) deferred.reject(err);
  
         if (user) {
             // return user (without hashed password)
+            
             deferred.resolve(_.omit(user, 'hash'));
         } else {
             // user not found
