@@ -1,6 +1,15 @@
-body{
-	padding: 20px 0;
-}
-.flash-message{
-	margin-top: 20px;
-}
+html {
+	margin: 0;
+	padding: 0;
+	}
+body { 
+	font: 100% georgia, sans-serif;
+	line-height: 1.88889;
+	color: #555753; 
+	width: 700px;
+    height: 200px
+    position: relative;
+	background: #fff url(https://s18.postimg.org/oyurrju4p/Logomakr_6fa_Ffu.png) no-repeat 500px 10px; 
+	margin: 0px; 
+	padding: 50px;
+	}

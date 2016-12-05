@@ -5,37 +5,40 @@
 		.module('app')
 		.controller('Account.IndexController', Controller);
 		
-		function Controller ($window, UserService, FlashService) {
+		function Controller ($window, UserService, Flashes) {
 			var vm = this;
 			
 			vm.user = null;
-			vm.addUser = addUser;
-			vm.removeUser = removeUser;
+			vm.saveUser = saveUser;
+			vm.deleteUser = deleteUser;
 			
 			initController();
 			
 			function initController() {
-				Useres.GetCurrent().then(function (user) {
+				UserService.GetCurrent().then(function (user) {
 					vm.user = user;
 				});
 			}
-			function removeUser() {
-				Useres.Remove(vm.user._id)
-					.then(function () {
-						$window.location = '\login';
-					})
-					.catch(function (error) {
-						Flashes.Error(error);
-					});
-			}
-			function addUser() {
-				Useres.Update(vm.user)
-					.then(function() {
-						Flashes.Success('User update');
-						}).catch(function (error) {
-							Flashes.Error(error);
-							});
-			}
+			function saveUser() {
+            UserService.Update(vm.user)
+                .then(function () {
+                    FlashService.Success('User updated');
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                });
+        }
+ 
+        function deleteUser() {
+            UserService.Delete(vm.user._id)
+                .then(function () {
+                    // log user out
+                    $window.location = '/login';
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                });
+        }
 			
 		}
 	})();

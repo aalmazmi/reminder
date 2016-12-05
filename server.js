@@ -1,63 +1,32 @@
-var http = require('http');
-
-var PORT = process.env.PORT || 8089;
-
-var topicList = [];
-var topicDetail = {};
-var currentId = 123;
-
-function addTopic(tTitle, tText) {
-  console.log("addTopic(" + tTitle + "," + tText + ")");
-  var topicId = ++currentId;
-  topicList.push({title: tTitle, id: topicId});
-  topicDetail[topicId] = {title: tTitle, text: tText, comments: []};
-  return topicId;
-}
-function addComment(topicId, text) {
-  console.log("addComment(" + topicId + "," + text + ")");
-  topicDetail[topicId].comments.push(text);
-}
-
-
-var server = http.createServer(function (request, response) {
-  response.setHeader('Access-Control-Allow-Origin', '*');
-  response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  response.setHeader('Access-Control-Allow-Credentials', true);
-
-  console.log('TopicList=' + JSON.stringify(topicList));
-  console.log('TopicDetail=' + JSON.stringify(topicDetail));
-  var requestBody = '';
-  request.on('data', function (data) {
-    requestBody += data;
-  });
-  request.on('end', function () {
-    handleRequest(request, response, requestBody);
-  });
+require('rootpath')();
+var express = require('express');
+var app = express();
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var expressJwt = require('express-jwt');
+var config = require('config.json');
+ 
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(session({ secret: config.secret, resave: false, saveUninitialized: true }));
+ 
+// use JWT auth to secure the api
+app.use('/api', expressJwt({ secret: config.secret }).unless({ path: ['/api/users/authenticate', '/api/users/register'] }));
+ 
+// routes
+app.use('/login', require('./controllers/login.controller'));
+app.use('/register', require('./controllers/register.controller'));
+app.use('/app', require('./controllers/app.controller'));
+app.use('/api/users', require('./controllers/api/users.controller'));
+ 
+// make '/app' default route
+app.get('/', function (req, res) {
+    return res.redirect('/app');
 });
-
-function handleRequest(request, response, requestBody) {
-  console.log(request.method + ":" + request.url + ' >>' + requestBody);
-  if (request.url == '/') {
-    if (request.method == 'POST') {
-      var jsonMsg = JSON.parse(requestBody);
-      addTopic(jsonMsg.title, jsonMsg.text);
-      response.end();
-    } else {
-      response.end(JSON.stringify(topicList));
-    }
-  } else {
-    var topicId = request.url.substring(1);
-    if (request.method == 'POST') {
-      var jsonMsg = JSON.parse(requestBody);
-      addComment(jsonMsg.topicId, jsonMsg.text);
-      response.end();
-    } else {
-      response.end(JSON.stringify(topicDetail[topicId]));
-    }
-  }
-}
-
-server.listen(PORT, function () {
-  console.log('Server running...');
+ 
+// start server
+var server = app.listen(3000, function () {
+    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });

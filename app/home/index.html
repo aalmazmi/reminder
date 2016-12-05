@@ -1,1 +1,21 @@
-<h1>Hi {{vm.user.firstName}}!!</h1>
+<h1>Hi {{vm.user.firstName}}!! What would you want to be rem!nded of?</h1>
+<div class="form-container">
+    <form method="post">
+        <div class="form-group">
+            <label for="firstName">Description:</label>
+            <input type="text" id="firstName" class="form-control" ng-model="vm.user.description" required />
+        </div>
+        <div class="form-group">
+            <label for="lastName">Date and time </label>
+            <input type="datetime-local" id="daytime" class="form-control" ng-model="vm.user.datetime" required/>
+        </div>
+         <div class="form-group">
+            <label for="lastName">When do you want to be reminded of it?</label>
+            <input type="datetime-local" id="daytimeremind" class="form-control" ng-model="vm.user.datetimeremind" required/>
+        </div>
+        
+        <div class="form-group">
+            <button class="btn btn-primary" ng-click="vm.addtoDo()">Save</button>
+        </div>
+    </form>
+</div>

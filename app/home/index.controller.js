@@ -7,8 +7,8 @@
  
     function Controller(UserService) {
         var vm = this;
- 
         vm.user = null;
+		vm.addtoDo = addtoDo;
  
         initController();
  
@@ -17,6 +17,16 @@
             UserService.GetCurrent().then(function (user) {
                 vm.user = user;
             });
+        }
+        
+         function addtoDo() {
+            UserService.update(vm.user._id)
+                .then(function () {
+                    FlashService.Success('User updated');
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                });
         }
     }
  
