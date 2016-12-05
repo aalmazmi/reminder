@@ -36,6 +36,7 @@
             $rootScope.activeTab = toState.data.activeTab;
         });
     }
+
  
     // manually bootstrap angular after the JWT token is retrieved from the server
     $(function () {
