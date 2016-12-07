@@ -1,6 +1,6 @@
 {
     "connectionString": "mongodb://reminder:reminder@jello.modulusmongo.net:27017/h8ojodYp",
-    "apiUrl":  "https://cut-it-off.mybluemix.net/",
+    "apiUrl":  "https://cut-it-off.mybluemix.net/api",
     "secret": "mazmooz"
 }
 
