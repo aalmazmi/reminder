@@ -2,7 +2,7 @@ require('rootpath')();
 var express = require('express');
 var app = express();
 var database = require('config.json'); 			// load the database config
-var morgan = require('morgan'); 		// log requests to the console (express4)
+var morgan = require('morgan'); 		
 
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -11,13 +11,14 @@ var config = require('config.json');
 var Todo = require('./app/models/todo');
 var mongo = require('mongoskin');
 var methodOverride = require('method-override'); 
-var mongoose = require('mongoose'); 					// mongoose for mongodb
+var mongoose = require('mongoose'); 	
+var cfenv = require('cfenv');				
 mongoose.connect('mongodb://reminder:reminder@jello.modulusmongo.net:27017/h8ojodYp'); 	// connect to mongoDB database on modulus.io
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('dev')); 										// log every request to the console
+app.use(morgan('dev')); 										
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(session({ secret: config.secret, resave: false, saveUninitialized: true }));
@@ -38,8 +39,8 @@ app.get('/', function (req, res) {
 require('./app/routes.js')(app);
 
 
- 
+ var appEnv = cfenv.getAppEnv();
 // start server
-var server = app.listen(3000, function () {
-    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
+app.listen(appEnv.port, '0.0.0.0' function () {
+    console.log("Server listening at" + appEnv.url);
 });
