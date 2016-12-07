@@ -40,7 +40,10 @@ require('./app/routes.js')(app);
 
 
  var appEnv = cfenv.getAppEnv();
-// start server
-app.listen(appEnv.port, '0.0.0.0', function () {
-    console.log("Server listening at" + appEnv.url);
+var server = app.listen(3000, function () {
+	
 });
+// start server
+/*var server = app.listen(appEnv.port, '0.0.0.0', function () {
+    console.log("Server listening at" + appEnv.url);
+});*/
