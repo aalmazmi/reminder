@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var database = require('config.json'); 			// load the database config
 var morgan = require('morgan'); 		// log requests to the console (express4)
-var cfenv = require('cfenv');
+
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var expressJwt = require('express-jwt');
@@ -41,13 +41,8 @@ app.get('/', function (req, res) {
 require('./app/routes.js')(app);
 
 
- var appEnv = cfenv.getAppEnv();
-
-// start server on the specified port and binding host
-app.listen(appEnv.port, appEnv.bind, function() {
-
-	// print a message when the server starts listening
-  console.log("server starting on " + appEnv.url);
-});
+ 
 // start server
-
+var server = app.listen(3000, function () {
+    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
+});
