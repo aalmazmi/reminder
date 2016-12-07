@@ -32,7 +32,7 @@ var vm = this
 		});
 
 	$scope.createTodo = function() {
-		$scope.formData.text = vm.user.username + ":" + $scope.formData.text
+		$scope.formData.text = vm.user.emai + ": " + $scope.formData.text
 
 		for (var i=0; i < $scope.formData.inte; i++) {
 		$http.post('/api/todos', $scope.formData)
@@ -62,5 +62,3 @@ var vm = this
 }
 
 })();
-
-  
